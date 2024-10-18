@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Petrona:wght@600&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Petrona:wght@800&display=swap" rel="stylesheet" />
+    <title>Filtered Products</title>
+    <style>
+        body {
+            font-family: "Petrona", serif;
+            background-color: rgb(237, 197, 172);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .filters {
+            max-width: 960px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #e6a46e;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .filters h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            /* Increased font size */
+            margin-bottom: 32px;
+            font-weight: 500 !important;
+        }
+        
+        .filters section {
+            display: none;
+        }
+        
+        .filters section.active {
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            display: none;
+        }
+        
+        .checkbox-container label {
+            padding: 36px;
+            /* Increased padding to make circles larger */
+            font-size: large;
+            font-family: "Petrona", serif;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f9f3ee;
+            border: 1px solid #a66464;
+            margin-bottom: 24px;
+        }
+        /* Completely round options for step 1 and step 2 */
+        
+        #step1 .checkbox-container label,
+        #step2 .checkbox-container label {
+            border-radius: 50%;
+        }
+        /* Rounded edges options for step 3, 4, and 5 */
+        
+        #step3 .checkbox-container label,
+        #step4 .checkbox-container label,
+        #step5 .checkbox-container label {
+            border-radius: 25px;
+            /* Completely rounded edges on the left and right */
+        }
+        
+        .checkbox-container input[type="checkbox"]:checked+label,
+        .checkbox-container label:hover {
+            background-color: #a66464;
+            color: white;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .pagination button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+        
+        .checkbox-container-email {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-container-email label {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            font-size: large;
+            font-family: "Petrona", serif;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f9f3ee;
+            border: 1px solid #a66464;
+            border-radius: 10px;
+            /* Rounded corners */
+        }
+        
+        .checkbox-container-email label input[type="email"] {
+            margin-left: 10px;
+            /* Space between label and input */
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #a66464;
+            border-radius: 5px;
+            flex: 1;
+            /* Allow input to expand */
+        }
+        
+        #email {
+            border: 1px solid #a66464;
+            font-size: 16px;
+            padding: 10px;
+            vertical-align: baseline;
+        }
+        
+        #email:hover,
+        #email:active,
+        #email:focus {
+            border: #a66464 1px solid;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .checkbox-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .pagination {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+            }
+            .pagination>button {
+                margin-bottom: 15px;
+            }
+        }
+        /* >>>>>>>>>>>>>>>>>>>> */
+        /* Responsive Styles */
+        
+        @media only screen and (max-width: 1024px) {
+            .filters {
+                width: 90%;
+                padding: 16px;
+            }
+            .filters h2 {
+                font-size: 2.5rem;
+                margin-bottom: 32px;
+            }
+            .checkbox-container {
+                display: grid;
+                gap: 16px;
+            }
+            #step1 .checkbox-container,
+            #step2 .checkbox-container {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            #step3 .checkbox-container,
+            #step4 .checkbox-container,
+            #step5 .checkbox-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .checkbox-container label {
+                padding: 28px;
+                font-size: medium;
+            }
+            .pagination button {
+                padding: 8px 16px;
+                font-size: 0.875rem;
+            }
+        }
+        
+        @media only screen and (max-width: 768px) {
+            .filters {
+                width: 95%;
+                padding: 16px;
+            }
+            .filters h2 {
+                font-size: 2.25rem;
+                margin-bottom: 28px;
+            }
+            .checkbox-container {
+                display: grid;
+                gap: 14px;
+            }
+            #step1 .checkbox-container,
+            #step2 .checkbox-container {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            #step3 .checkbox-container,
+            #step4 .checkbox-container,
+            #step5 .checkbox-container {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            .checkbox-container label {
+                padding: 24px;
+                font-size: medium;
+            }
+            .checkbox-container-email {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .checkbox-container-email label {
+                padding: 16px;
+                font-size: medium;
+            }
+            .checkbox-container-email label input[type="email"] {
+                font-size: 0.875rem;
+                padding: 8px;
+            }
+            .pagination button {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .filters {
+                width: 98%;
+                padding: 12px;
+            }
+            .filters h2 {
+                font-size: 2rem;
+                margin-bottom: 24px;
+            }
+            .checkbox-container {
+                display: grid;
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+            .checkbox-container label {
+                padding: 20px;
+                font-size: small;
+            }
+            .checkbox-container-email {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .checkbox-container-email label {
+                padding: 12px;
+                font-size: small;
+            }
+            .checkbox-container-email label input[type="email"] {
+                font-size: 0.875rem;
+                padding: 8px;
+            }
+            .pagination {
+                flex-direction: row;
+                align-items: center;
+            }
+            .pagination button {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+        
+        @media only screen and (max-width: 480px) {
+            .filters {
+                width: 100%;
+                padding: 8px;
+            }
+            .filters h2 {
+                font-size: 1.75rem;
+                margin-bottom: 20px;
+            }
+            .checkbox-container {
+                display: grid;
+                gap: 10px;
+                grid-template-columns: 1fr;
+            }
+            .checkbox-container label {
+                padding: 12px;
+                font-size: small;
+            }
+            .checkbox-container-email label {
+                padding: 10px;
+                font-size: small;
+            }
+            .checkbox-container-email label input[type="email"] {
+                font-size: 0.75rem;
+                padding: 6px;
+            }
+            .pagination button {
+                padding: 4px 8px;
+                font-size: 0.625rem;
+            }
+        }
+        /* Circular Options for Step 1 and Step 2 */
+        
+        #step1 .checkbox-container label,
+        #step2 .checkbox-container label {
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Stylish Options for Step 3, 4, and 5 */
+        
+        #step3 .checkbox-container label,
+        #step4 .checkbox-container label,
+        #step5 .checkbox-container label {
+            border-radius: 15px;
+            background-color: #f9f3ee;
+            border: 1px solid #a66464;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        #step3 .checkbox-container input[type="checkbox"]:checked+label,
+        #step4 .checkbox-container input[type="checkbox"]:checked+label,
+        #step5 .checkbox-container input[type="checkbox"]:checked+label,
+        #step3 .checkbox-container label:hover,
+        #step4 .checkbox-container label:hover,
+        #step5 .checkbox-container label:hover {
+            background-color: #a66464;
+            color: white;
+        }
+        /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+        /* Responsive Styles for Step 1 and Step 2 */
+        
+        @media only screen and (max-width: 1024px) {
+            #step1 .checkbox-container,
+            #step2 .checkbox-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #step1 .checkbox-container label,
+            #step2 .checkbox-container label {
+                width: auto;
+                /* Allow the width to adjust naturally */
+                padding: 32px;
+                /* Increase padding for larger circular buttons */
+                text-align: center;
+                border-radius: 50%;
+                /* Completely rounded */
+                margin-bottom: 10px;
+                /* Space between options */
+            }
+        }
+        
+        @media only screen and (max-width: 768px) {
+            #step1 .checkbox-container,
+            #step2 .checkbox-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #step1 .checkbox-container label,
+            #step2 .checkbox-container label {
+                width: auto;
+                /* Allow the width to adjust naturally */
+                padding: 28px;
+                /* Adjust padding for smaller screens */
+                text-align: center;
+                border-radius: 50%;
+                /* Completely rounded */
+                margin-bottom: 8px;
+                /* Space between options */
+            }
+        }
+        
+        @media only screen and (max-width: 600px) {
+            #step1 .checkbox-container,
+            #step2 .checkbox-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #step1 .checkbox-container label,
+            #step2 .checkbox-container label {
+                width: auto;
+                /* Allow the width to adjust naturally */
+                padding: 28px;
+                /* Adjust padding for smaller screens */
+                text-align: center;
+                border-radius: 50%;
+                /* Completely rounded */
+                margin-bottom: 6px;
+                /* Space between options */
+            }
+        }
+        
+        @media only screen and (max-width: 480px) {
+            #step1 .checkbox-container,
+            #step2 .checkbox-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #step1 .checkbox-container label,
+            #step2 .checkbox-container label {
+                width: auto;
+                /* Allow the width to adjust naturally */
+                padding: 24px;
+                /* Adjust padding for smaller screens */
+                text-align: center;
+                border-radius: 50%;
+                /* Completely rounded */
+                margin-bottom: 4px;
+                /* Space between options */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post" action="{% url 'filter_products' %}" class="filters">
+        {% csrf_token %}
+
+        <!-- Step 1: Age Categories -->
+        <section id="step1" class="active">
+            <h2>What is your age?</h2>
+            <div class="checkbox-container">
+                <input type="checkbox" id="teens" name="teens" />
+                <label for="teens"> <20 </label>
+                <input type="checkbox" id="twenties" name="twenties" />
+                <label for="twenties">20s</label>
+                <input type="checkbox" id="thirties" name="thirties" />
+                <label for="thirties">30s</label>
+                <input type="checkbox" id="forties" name="forties" />
+                <label for="forties">40s</label>
+                <input type="checkbox" id="fifties" name="fifties" />
+                <label for="fifties">50s</label>
+                <input type="checkbox" id="sixties" name="sixties" />
+                <label for="sixties">60+</label>
+            </div>
+            <div class="pagination">
+                <button type="button" id="nextBtn1">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 2: Skin Types -->
+        <section id="step2">
+            <h2>Tell us about your skin:</h2>
+            <div class="checkbox-container">
+                <input type="checkbox" id="skin_type_normal" name="skin_type_normal" />
+                <label for="skin_type_normal">Normal</label>
+                <input type="checkbox" id="oily" name="oily" />
+                <label for="oily">Oily</label>
+                <input type="checkbox" id="dry" name="dry" />
+                <label for="dry">Dry</label>
+                <input type="checkbox" id="sensitive" name="sensitive" />
+                <label for="sensitive">Sensitive</label>
+                <input type="checkbox" id="combination" name="combination" />
+                <label for="combination">Combination</label>
+            </div>
+            <div class="pagination">
+                <button type="button" id="prevBtn2">Back</button>
+                <button type="button" id="nextBtn2">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 3: Skin Concerns -->
+        <section id="step3">
+            <h2>What are your top skincare concerns?</h2>
+            <div class="checkbox-container">
+                <input type="checkbox" id="skin_concerns_acne" name="skin_concerns_acne" />
+                <label for="skin_concerns_acne">Acne</label>
+                <input type="checkbox" id="aging" name="aging" />
+                <label for="aging">Aging</label>
+                <input type="checkbox" id="dull_skin" name="dull_skin" />
+                <label for="dull_skin">Dull Skin</label>
+                <input type="checkbox" id="elasticity" name="elasticity" />
+                <label for="elasticity">Elasticity</label>
+                <input type="checkbox" id="hydration" name="hydration" />
+                <label for="hydration">Hydration</label>
+                <input type="checkbox" id="pigmentation" name="pigmentation" />
+                <label for="pigmentation">Pigmentation</label>
+                <input type="checkbox" id="pores" name="pores" />
+                <label for="pores">Pores</label>
+                <input type="checkbox" id="redness" name="redness" />
+                <label for="redness">Redness</label>
+                <input type="checkbox" id="scarring" name="scarring" />
+                <label for="scarring">Scarring</label>
+                <input type="checkbox" id="sensitive_skin" name="sensitive_skin" />
+                <label for="sensitive_skin">Sensitive Skin</label>
+                <input type="checkbox" id="sun_protection" name="sun_protection" />
+                <label for="sun_protection">Sun Protection</label>
+                <input type="checkbox" id="texture" name="texture" />
+                <label for="texture">Texture</label>
+                <input type="checkbox" id="uneven_skin_tone" name="uneven_skin_tone" />
+                <label for="uneven_skin_tone">Uneven Skin Tone</label>
+            </div>
+            <div class="pagination">
+                <button type="button" id="prevBtn3">Back</button>
+                <button type="button" id="nextBtn3">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 4: Product Types -->
+        <section id="step4">
+            <h2>
+                Do you use any of the following types of skincare products/ingredients?
+            </h2>
+            <div class="checkbox-container">
+                <input type="checkbox" id="body_care" name="body_care" />
+                <label for="body_care">Body Care</label>
+                <input type="checkbox" id="eye_cream" name="eye_cream" />
+                <label for="eye_cream">Eye Cream</label>
+                <input type="checkbox" id="cleanser" name="cleanser" />
+                <label for="cleanser">Cleanser</label>
+                <input type="checkbox" id="exfoliant" name="exfoliant" />
+                <label for="exfoliant">Exfoliant</label>
+                <input type="checkbox" id="microneedling" name="microneedling" />
+                <label for="microneedling">Microneedling</label>
+                <input type="checkbox" id="moisturizer" name="moisturizer" />
+                <label for="moisturizer">Moisturizer</label>
+                <input type="checkbox" id="peels" name="peels" />
+                <label for="peels">Peels</label>
+                <input type="checkbox" id="serums" name="serums" />
+                <label for="serums">Serums</label>
+                <input type="checkbox" id="sun_screen" name="sun_screen" />
+                <label for="sun_screen">Sunscreen</label>
+                <input type="checkbox" id="spot_treatment" name="spot_treatment" />
+                <label for="spot_treatment">Spot Treatment</label>
+                <input type="checkbox" id="toner" name="toner" />
+                <label for="toner">Toner</label>
+                <input type="checkbox" id="use_sunscreen_daily" name="use_sunscreen_daily" />
+                <label for="use_sunscreen_daily">Use Sunscreen Daily</label>
+                <input type="checkbox" id="react_to_sun_exposure" name="react_to_sun_exposure" />
+                <label for="react_to_sun_exposure">React to Sun Exposure</label>
+                <input type="checkbox" id="hair_loss" name="hair_loss" />
+                <label for="hair_loss">Hair Loss</label>
+            </div>
+            <div>
+                <label class="checkbox-container-email" style="padding: 30px">Enter Your Email :<input id="email" type="email" name="email"
+          /></label>
+            </div>
+            <div class="pagination">
+                <button type="button" id="prevBtn4">Back</button>
+                <button type="submit">Submit</button>
+            </div>
+        </section>
+    </form>
+
+    <script>
+        const steps = ["step1", "step2", "step3", "step4"];
+        let currentStep = 0;
+
+        function showStep(step) {
+            document.getElementById(steps[currentStep]).classList.remove("active");
+            document.getElementById(steps[step]).classList.add("active");
+            currentStep = step;
+        }
+
+        document
+            .getElementById("nextBtn1")
+            .addEventListener("click", () => showStep(1));
+        document
+            .getElementById("prevBtn2")
+            .addEventListener("click", () => showStep(0));
+        document
+            .getElementById("nextBtn2")
+            .addEventListener("click", () => showStep(2));
+        document
+            .getElementById("prevBtn3")
+            .addEventListener("click", () => showStep(1));
+        document
+            .getElementById("nextBtn3")
+            .addEventListener("click", () => showStep(3));
+        document
+            .getElementById("prevBtn4")
+            .addEventListener("click", () => showStep(2));
+    </script>
+</body>
+
+</html>

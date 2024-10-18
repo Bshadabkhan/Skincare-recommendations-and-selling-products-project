@@ -1,0 +1,117 @@
+\
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product</title>
+    <style>
+        body {
+            font-family: "Petrona", serif;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Ensure full viewport height */
+            /* Add background image */
+            background-image: url("https://img.freepik.com/free-photo/flat-lay-natural-medicinal-spices-herbs_23-2148776507.jpg?t=st=1718729121~exp=1718732721~hmac=cae6671bb9a8703076cd0ee7d69222e0ec38bfcddc1377d83a1db89ab6d45a19&w=826");
+            background-size: cover;
+            /* Cover the entire background */
+            background-position: center;
+            /* Center the background image */
+            background-repeat: no-repeat;
+            /* Prevent background image from repeating */
+        }
+        
+        .c {
+            background-color: #ecb282;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            /* Remove default margin */
+            border-radius: 50px;
+            padding: 32px;
+            /* Increased padding for better spacing */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            /* Added box-shadow for depth */
+        }
+        
+        .products {
+            padding: 10px;
+            margin-right: 0px;
+            margin-right: 0px;
+        }
+        
+        .products>div {
+            padding: 5px;
+            margin-right: 0px;
+            align-items: flex-start;
+        }
+        
+        .backpage,
+        .refer {
+            display: inline-flex;
+            /* Change to inline-flex for button-like behavior */
+            align-items: center;
+            /* Center align items */
+            justify-content: center;
+            /* Center align content */
+            margin: 20px;
+            /* Adjusted margin */
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 16px;
+            /* Added font size */
+            background-color: #007bff;
+            /* Button background color */
+            border: none;
+            /* Remove border */
+            border-radius: 15px;
+            /* Add border radius */
+            padding: 10px;
+            /* Add padding */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Add smooth transition */
+        }
+        
+        .backpage:hover,
+        .refer:hover {
+            background-color: #0056b3;
+            /* Change background color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="c">
+        <h2 style="font-weight: 600; font-style: oblique">
+            Recommended Products
+        </h2>
+        {% if product_count > 0 %}
+        <h4>Total number of Products: {{ product_count }}</h4>
+        <div class="products">
+            {% for product in products %}
+            <h4>{{ forloop.counter }}. {{ product.product_name }}</h4>
+            {% endfor %}
+        </div>
+        {% else %}
+        <h3 style="background-color: red">Select different combination</h3>
+        {% endif %}
+        <div style="display: flex">
+            <a href="/index" class="refer">
+                <h4>Refer & Earn</h4>
+            </a>
+            <a class="backpage" href="/">Back to Home Page</a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Refer</title>
+</head>
+<style>
+    /* Base Styles */
+    
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        /* Ensure full viewport height */
+        /* Add background image */
+        background-image: url("https://img.freepik.com/free-photo/horizontal-banner-beauty-products_23-2149446551.jpg?w=1380&t=st=1718528040~exp=1718528640~hmac=b88a450b037e05f4e561b4fd1757c6b3c58475f49e5368073c2a9da6e2bea5d9");
+        background-size: cover;
+        /* Cover the entire background */
+        background-position: center;
+        /* Center the background image */
+        background-repeat: no-repeat;
+        /* Prevent background image from repeating */
+    }
+    
+    main {
+        width: 50%;
+        max-width: 500px;
+        padding: 20px;
+        background-color: #dac2ad;
+        box-shadow: 0 0 10px rgba(248, 214, 205, 0.1);
+        border-radius: 8px;
+        box-sizing: border-box;
+        margin: 20px;
+    }
+    
+    h2 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .about {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 20px;
+        text-align: center;
+        /* Center align text */
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        /* Center form elements horizontally */
+    }
+    
+    label {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        color: #333;
+        width: 100%;
+        /* Full width to match form elements */
+    }
+    
+    input[type="email"],
+    input[type="text"] {
+        padding: 10px;
+        margin-top: 5px;
+        border: none;
+        /* Remove border */
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    
+    input[type="email"]:focus,
+    input[type="text"]:focus {
+        outline: none;
+        /* Remove outline on focus */
+        box-shadow: 0 0 0 2px #5fe1ec;
+        /* Optional: Add shadow for focus state */
+    }
+    
+    .terms {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+    
+    button#nextButton {
+        width: 20%;
+        /* Reduce width to 20% */
+        padding: 10px 0;
+        background-color: #5fe1ec;
+        color: #000;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: center;
+        border: 1px solid #5fe1ec;
+    }
+    
+    button#nextButton:hover {
+        color: #5fe1ec;
+        background-color: #fff;
+        border: 1px solid #5fe1ec;
+    }
+    
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        /* Ensure the container takes up full width */
+    }
+    
+    .backpage {
+        display: inline-block;
+        /* Inline block to allow setting width */
+        width: 40%;
+        /* Set the width to 40% */
+        color: white;
+        /* Changed text color to white for better contrast */
+        font-weight: 500;
+        background-color: rgb(65, 65, 255);
+        /* Use blue background as specified */
+        text-align: center;
+        /* Center text inside the element */
+        padding: 10px;
+        /* Add some padding for better appearance */
+        text-decoration: none;
+        /* Remove the underline from the link */
+        margin-top: 20px;
+        border-radius: 5px;
+    }
+    /* Media Queries */
+    /* Large devices (desktops, 992px and up) */
+    
+    @media (min-width: 992px) {
+        main {
+            padding: 40px;
+            width: 45%;
+        }
+        h2 {
+            font-size: 28px;
+        }
+        .about {
+            font-size: 18px;
+        }
+        label {
+            font-size: 16px;
+        }
+        input[type="email"],
+        input[type="text"] {
+            font-size: 16px;
+        }
+        .terms {
+            font-size: 14px;
+        }
+        button#nextButton {
+            font-size: 18px;
+        }
+    }
+    /* Medium devices (tablets, 768px and up) */
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+        main {
+            padding: 30px;
+            width: 52.5%;
+        }
+        h2 {
+            font-size: 26px;
+        }
+        .about {
+            font-size: 17px;
+        }
+        label {
+            font-size: 15px;
+        }
+        input[type="email"],
+        input[type="text"] {
+            font-size: 15px;
+        }
+        .terms {
+            font-size: 13px;
+        }
+        button#nextButton {
+            font-size: 17px;
+        }
+    }
+    /* Small devices (landscape phones, 576px and up) */
+    
+    @media (min-width: 576px) and (max-width: 767px) {
+        main {
+            padding: 25px;
+            width: 70%;
+            /* Increased width by 10% */
+        }
+        h2 {
+            font-size: 24px;
+        }
+        .about {
+            font-size: 16px;
+        }
+        label {
+            font-size: 14px;
+        }
+        input[type="email"],
+        input[type="text"] {
+            font-size: 14px;
+        }
+        .terms {
+            font-size: 12px;
+        }
+        button#nextButton {
+            font-size: 16px;
+        }
+    }
+    /* Extra small devices (phones, less than 576px) */
+    
+    @media (max-width: 575px) {
+        main {
+            padding: 20px;
+            width: 75%;
+            /* Increased width by 10% */
+        }
+        h2 {
+            font-size: 22px;
+        }
+        .about {
+            font-size: 15px;
+        }
+        label {
+            font-size: 13px;
+        }
+        input[type="email"],
+        input[type="text"] {
+            font-size: 13px;
+        }
+        .terms {
+            font-size: 11px;
+        }
+        button#nextButton {
+            font-size: 15px;
+        }
+    }
+</style>
+
+<body>
+    <main>
+        <h2>Refer a friend and you both save!</h2>
+        <p class="about">
+            Share Sleep Doctor with a friend and they will receive a code for $25 off their first purchase (minimum $100). If they make a purchase with us, we will send you code for $25 off your next purchase of $100 or more. It's that easy!
+        </p>
+        <form id="referForm" method="post">
+            {% csrf_token %}
+            <label for="email">
+          Your Email
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@email.com"
+            required
+          />
+        </label>
+            <label for="name">
+          Your Name (optional)
+          <input type="text" id="name" name="name" placeholder="First Last" />
+        </label>
+            <p class="terms">
+                By continuing you agree to our Terms and Conditions and Privacy Policy
+            </p>
+            <button type="submit" id="nextButton">Submit</button>
+        </form>
+        <div class="center-container">
+            <!-- <a
+          class="backpage"
+          href="/"
+          style="text-decoration: none; justify-content: center"
+          >Back to Home Page</a
+        > -->
+        </div>
+    </main>
+    <script src="app.js"></script>
+</body>
+
+</html>
